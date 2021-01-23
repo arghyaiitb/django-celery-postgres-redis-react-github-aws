@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "").split(" ")
 
 # Application definition
-BUILD_INSTALLED_APPS = []
+BUILD_INSTALLED_APPS = ['posts', 'comments']
 
 THIRD_PARTY_INSTALLED_APPS = [
     "rest_framework",
