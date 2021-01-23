@@ -1,0 +1,57 @@
+version: "3.7"
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend/:/app/
+    ports:
+      - 8000:8000
+    env_file:
+      - ./.env
+    depends_on:
+      - postgresql_db
+
+  postgresql_db:
+    image: postgres:12.4-alpine
+    volumes:
+      - ~/volumes/django-celery-postgres-redis-react-github-aws/server/postgres:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=${SQL_USER}
+      - POSTGRES_PASSWORD=${SQL_PASSWORD}
+      - POSTGRES_DB=${SQL_DATABASE}
+
+  redis_server:
+    image: redis:6.0.9
+    container_name: redis_server
+    ports:
+      - 6379:6379
+    command: redis-server
+    volumes:
+      - $PWD/redis-data:/var/lib/redis
+      - $PWD/redis.conf:/usr/local/etc/redis/redis.conf
+
+  celery:
+    build: ./backend
+    command: celery -A backend worker -l info --concurrency=10 -n worker1@%h
+    volumes:
+      - ./backend/:/app/
+    env_file:
+      - ./.env
+    depends_on:
+      - postgresql_db
+      - redis_server
+  celery-beat:
+    build: ./backend
+    command: celery -A backend beat -l info
+    volumes:
+      - ./backend/:/app/
+    env_file:
+      - ./.env
+    depends_on:
+      - postgresql_db
+      - redis_server

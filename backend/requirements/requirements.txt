@@ -1,0 +1,13 @@
+Django==3.1.2
+django-cors-headers==3.5.0
+django-fsm==2.7.1
+djangorestframework==3.12.1
+factory-boy==3.1.0
+django-cacheops==5.1
+ipython==7.9.0
+celery==5.0.2
+django-json-widget==1.0.1
+sentry-sdk==0.19.2
+smart-open[s3]==4.0.1
+django-health-check==3.16.2
+psutil==5.8.0

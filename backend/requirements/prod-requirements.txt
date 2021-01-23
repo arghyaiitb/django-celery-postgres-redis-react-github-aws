@@ -1,0 +1,7 @@
+-r requirements.txt
+gunicorn==20.0.4
+boto3==1.16.10
+psycopg2-binary==2.8.6
+sentry-sdk==0.19.2
+newrelic==5.22.1.152
+django-amazon-ses==4.0.0

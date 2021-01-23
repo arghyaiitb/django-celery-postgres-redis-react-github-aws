@@ -1,0 +1,4 @@
+-r requirements.txt
+psycopg2==2.8.6
+coverage==5.3.0
+coverage-badge==1.0.1
